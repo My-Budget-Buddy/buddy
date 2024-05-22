@@ -14,16 +14,11 @@ Make sure you have the following installed on your machine:
 
 ## Setup
 
-### 1. Install dependencies
+Run the following command to install dependencies, build the project, and setup the binary
 
-`npm i`
-
-### 2. Build the project
-
-`npm run build`
-
-### 3. Link the command to your npm
-`npm link`
+```sh
+npm i && npm run build && npm link
+```
 
 ## Usage
 
