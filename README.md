@@ -14,12 +14,15 @@ Make sure you have the following installed on your machine:
 
 ## Setup
 
-### 1. Build the project
+### 1. Install dependencies
+
+`npm i`
+
+### 2. Build the project
 
 `npm run build`
 
-### 2. Link the tool
-
+### 3. Link the command to your npm
 `npm link`
 
 ## Usage
