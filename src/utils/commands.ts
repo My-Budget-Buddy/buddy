@@ -114,3 +114,45 @@ export const clean = async (): Promise<void> => {
       red(bold(`Failed to remove services directory: ${error.message}`)),
   });
 };
+
+export const resetdb = async (yes: boolean | undefined): Promise<void> => {
+  let hasAgreed = false;
+  if (typeof yes === "undefined") {
+    const response = await prompts({
+      type: "confirm",
+      name: "continue",
+      message:
+        "Are you sure you want to restart the database? This will overwrite your current data.",
+    });
+
+    hasAgreed = response.continue;
+  }
+
+  if (!hasAgreed) return;
+
+  const spinner = ora("Stopping database container...").start();
+  await exec("docker compose down db");
+  spinner.text = "Removing exising volume...";
+  try {
+    await exec("docker volume rm buddy_budgetbuddy-data");
+  } catch (e) {
+    spinner.fail(
+      red(
+        bold(
+          `Failed to remove docker volume${
+            e instanceof Error ? ": " + e.message : ""
+          }`
+        )
+      )
+    );
+
+    return;
+  }
+
+  spinner.text = "Rebuilding and starting database container...";
+
+  await exec("docker compose up -d --build db");
+  spinner.succeed(
+    green("Restarted and rebuilt database container using init.sql")
+  );
+};

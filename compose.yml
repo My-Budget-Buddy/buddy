@@ -36,8 +36,8 @@ services:
     ports:
       - 8125:8125
     environment:
-      - FRONTEND_URL=http://127.0.0.1:5173
-      - EUREKA_URL=http://host.docker.internal:8761/eureka
+      - FRONTEND_URL=http://localhost:5173
+      - EUREKA_URL=http://eureka:8761/eureka
     depends_on:
       db:
         condition: service_healthy
@@ -49,10 +49,10 @@ services:
     ports:
       - 8080:8080
     environment:
-      - DATABASE_URL=jdbc:postgresql://host.docker.internal:5555/budgetbuddy
+      - DATABASE_URL=jdbc:postgresql://db:5432/budgetbuddy
       - DATABASE_USERNAME=postgres
       - DATABASE_PASSWORD=password
-      - EUREKA_URL=http://host.docker.internal:8761/eureka
+      - EUREKA_URL=http://eureka:8761/eureka
     depends_on:
       db:
         condition: service_healthy
@@ -64,10 +64,10 @@ services:
     ports:
       - 8888:8888
     environment:
-      - DATABASE_URL=jdbc:postgresql://host.docker.internal:5555/budgetbuddy
+      - DATABASE_URL=jdbc:postgresql://db:5432/budgetbuddy
       - DATABASE_USER=postgres
       - DATABASE_PASS=password
-      - EUREKA_URL=http://host.docker.internal:8761/eureka
+      - EUREKA_URL=http://eureka:8761/eureka
     depends_on:
       db:
         condition: service_healthy
@@ -79,10 +79,10 @@ services:
     ports:
       - 8082:8080
     environment:
-      - DATABASE_URL=jdbc:postgresql://host.docker.internal:5555/budgetbuddy
+      - DATABASE_URL=jdbc:postgresql://db:5432/budgetbuddy
       - DATABASE_USERNAME=postgres
       - DATABASE_PASSWORD=password
-      - EUREKA_URL=http://host.docker.internal:8761/eureka
+      - EUREKA_URL=http://eureka:8761/eureka
     depends_on:
       db:
         condition: service_healthy
@@ -94,10 +94,10 @@ services:
     ports:
       - 8084:8084
     environment:
-      - DATABASE_URL=jdbc:postgresql://host.docker.internal:5555/budgetbuddy
+      - DATABASE_URL=jdbc:postgresql://db:5432/budgetbuddy
       - DATABASE_USER=postgres
       - DATABASE_PASS=password
-      - EUREKA_URL=http://host.docker.internal:8761/eureka
+      - EUREKA_URL=http://eureka:8761/eureka
     depends_on:
       db:
         condition: service_healthy
@@ -109,10 +109,10 @@ services:
     ports:
       - 8081:8081
     environment:
-      - DATABASE_URL=jdbc:postgresql://host.docker.internal:5555/budgetbuddy
+      - DATABASE_URL=jdbc:postgresql://db:5432/budgetbuddy
       - DATABASE_USERNAME=postgres
       - DATABASE_PASSWORD=password
-      - EUREKA_URL=http://host.docker.internal:8761/eureka
+      - EUREKA_URL=http://eureka:8761/eureka
     depends_on:
       db:
         condition: service_healthy
@@ -124,10 +124,10 @@ services:
     ports:
       - 8083:8083
     environment:
-      - DATABASE_URL=jdbc:postgresql://host.docker.internal:5555/budgetbuddy
+      - DATABASE_URL=jdbc:postgresql://db:5432/budgetbuddy
       - DATABASE_USER=postgres
       - DATABASE_PASS=password
-      - EUREKA_URL=http://host.docker.internal:8761/eureka
+      - EUREKA_URL=http://eureka:8761/eureka
     depends_on:
       db:
         condition: service_healthy

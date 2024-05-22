@@ -17,19 +17,26 @@ Make sure you have the following installed on your machine:
 Run the following command to install dependencies, build the project, and setup the binary. Some systems may have to run each independently.
 
 ### Linux/MacOS
+
 ```sh
 npm i && npm run build && npm link
 ```
+
 ### Some Powershells
+
 ```
 npm i; npm run build; npm link
 ```
+
+## Updating
+
+Pull the new changes from GitHub and run `npm run build` again.
 
 ## Usage
 
 ### Commands
 
-#### 1. `buddy build`
+#### 1. buddy build
 
 ```
 Usage: buddy build [options]
@@ -41,7 +48,7 @@ Options:
   -h, --help  display help for command
 ```
 
-#### 2. `buddy clean`
+#### 2. buddy clean
 
 ```
 Usage: buddy clean [options]
@@ -51,9 +58,25 @@ Remove all repositories
 Options:
   -h, --help  display help for command
 ```
+
+#### 3. buddy resetdb
+
+```
+Usage: buddy resetdb [options]
+
+Removes the volume for the database, rebuilding and updating it with new init schema/data.
+
+Options:
+  -y, --yes   Confirm you want to remove the volume and restart the database.
+  -h, --help  display help for command
+```
+
 ## Troubleshooting
+
 ### Powershell
+
 You may have to use CMD instead of powershell if you're on a older version of powershell.
 
 ### buddy build
+
 If the directories already exist, there will be an error. You can run `buddy clean` to remove previous repositories.

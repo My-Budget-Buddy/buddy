@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { Command } from "commander";
-import { build, clean } from "./utils/commands.js";
+import { build, clean, resetdb } from "./utils/commands.js";
 
 const program = new Command();
 
@@ -18,5 +18,16 @@ program
   .command("clean")
   .description("Remove all repositories")
   .action(async () => await clean());
+
+program
+  .command("resetdb")
+  .description(
+    "Removes the volume for the database, rebuilding and updating it with new init schema/data."
+  )
+  .option(
+    "-y, --yes",
+    "Confirm you want to remove the volume and restart the database."
+  )
+  .action(async (options) => await resetdb(options.yes));
 
 program.parse(process.argv);
