@@ -14,10 +14,15 @@ Make sure you have the following installed on your machine:
 
 ## Setup
 
-Run the following command to install dependencies, build the project, and setup the binary
+Run the following command to install dependencies, build the project, and setup the binary. Some systems may have to run each independently.
 
+### Linux/MacOS
 ```sh
 npm i && npm run build && npm link
+```
+### Some Powershells
+```
+npm i; npm run build; npm link
 ```
 
 ## Usage
@@ -46,3 +51,9 @@ Remove all repositories
 Options:
   -h, --help  display help for command
 ```
+## Troubleshooting
+### Powershell
+You may have to use CMD instead of powershell if you're on a older version of powershell.
+
+### buddy build
+If the directories already exist, there will be an error. You can run `buddy clean` to remove previous repositories.
