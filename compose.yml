@@ -36,7 +36,7 @@ services:
     ports:
       - 8125:8125
     environment:
-      - FRONTEND_URL=http://host.docker.internal:5176
+      - FRONTEND_URL=http://host.docker.internal:5173
       - EUREKA_URL=http://host.docker.internal:8761/eureka
     depends_on:
       db:

@@ -34,11 +34,11 @@ npm i; npm run build; npm link
 ```
 Usage: buddy build [options]
 
-Clone all repositories
+Clone, build, and start services
 
 Options:
   -a, --all   Clones all repositories, skips asking which ones to clone.
-  -h, --help  display help for comman
+  -h, --help  display help for command
 ```
 
 #### 2. `buddy clean`
