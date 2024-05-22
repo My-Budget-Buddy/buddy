@@ -7,7 +7,7 @@
   "scripts": {
     "build": "run-script-os",
     "build:windows": "tsc",
-    "build:macos:nix": "tsc && chmod +x dist/index.js"
+    "build:darwin:linux": "tsc && chmod +x dist/index.js"
   },
   "bin": {
     "buddy": "dist/index.js"
