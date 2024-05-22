@@ -5,7 +5,9 @@
   "main": "dist/index.js",
   "type": "module",
   "scripts": {
-    "build": "tsc && chmod +x dist/index.js"
+    "build": "run-script-os",
+    "build:windows": "tsc",
+    "build:macos:nix": "tsc && chmod +x dist/index.js"
   },
   "bin": {
     "buddy": "dist/index.js"
@@ -14,6 +16,7 @@
   "devDependencies": {
     "@types/node": "^20.12.12",
     "@types/prompts": "^2.4.9",
+    "run-script-os": "^1.1.6",
     "typescript": "^5.4.5"
   },
   "dependencies": {
