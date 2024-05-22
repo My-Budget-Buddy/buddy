@@ -244,3 +244,54 @@ CREATE TABLE transaction (
     transaction_description VARCHAR(500),
     transaction_category VARCHAR(50) NOT NULL
 );
+
+INSERT INTO transaction (user_id, account_id, vendor_name, transaction_date, transaction_amount, transaction_description, transaction_category) VALUES
+(1, 101, 'Amazon', '2024-01-15', 59.99, 'Purchase of electronics', 'SHOPPING'),
+(2, 102, 'Starbucks', '2024-01-16', 4.75, 'Coffee and snacks', 'DINING'),
+(1, 103, 'Walmart', '2024-01-17', 120.00, 'Grocery shopping', 'GROCERIES'),
+(3, 104, 'Apple Store', '2024-01-18', 999.99, 'New iPhone purchase', 'SHOPPING'),
+(2, 105, 'Netflix', '2024-01-19', 15.99, 'Monthly subscription', 'ENTERTAINMENT'),
+(4, 106, 'Shell', '2024-01-20', 45.50, 'Gas for car', 'TRANSPORTATION'),
+(3, 107, 'Costco', '2024-01-21', 200.00, 'Bulk shopping', 'GROCERIES'),
+(1, 108, 'Uber', '2024-01-22', 25.00, 'Ride to airport', 'TRANSPORTATION'),
+(4, 109, 'Spotify', '2024-01-23', 9.99, 'Monthly subscription', 'ENTERTAINMENT'),
+(2, 110, 'Best Buy', '2024-01-24', 499.99, 'Laptop purchase', 'SHOPPING'),
+(2, 102, 'Skillstorm', '2024-01-10', 2010.45, 'Paycheck', 'INCOME');
+
+--- ACCOUNTS ---
+CREATE SEQUENCE accounts_id_seq;
+
+CREATE TABLE IF NOT EXISTS accounts
+(
+    id integer NOT NULL DEFAULT nextval('accounts_id_seq'::regclass),
+    account_number character varying(255) COLLATE pg_catalog."default",
+    institution character varying(255) COLLATE pg_catalog."default",
+    investment_rate numeric(38,2),
+    routing_number character varying(255) COLLATE pg_catalog."default",
+    starting_balance numeric(38,2),
+    _type character varying(255) COLLATE pg_catalog."default",
+    user_id character varying(255) COLLATE pg_catalog."default",
+    CONSTRAINT accounts_pkey PRIMARY KEY (id),
+    CONSTRAINT accounts__type_check CHECK (_type::text = ANY (ARRAY['CHECKING'::character varying, 'SAVINGS'::character varying, 'CREDIT'::character varying, 'INVESTMENT'::character varying]::text[]))
+);
+
+INSERT INTO accounts (account_number, institution, investment_rate, routing_number, starting_balance, _type, user_id)
+VALUES 
+('123456789', 'Bank A', NULL, '111000025', 1500.00, 'CHECKING', '1'),
+('987654321', 'Bank B', NULL, '111000026', 2000.00, 'CHECKING', '1'),
+('112233445', 'Bank C', NULL, '111000027', 1200.00, 'CHECKING', '1');
+
+INSERT INTO accounts (account_number, institution, investment_rate, routing_number, starting_balance, _type, user_id)
+VALUES 
+('223344556', 'Bank D', NULL, '222000025', 3000.00, 'SAVINGS', '1'),
+('667788990', 'Bank E', NULL, '222000026', 2500.00, 'SAVINGS', '1');
+
+INSERT INTO accounts (account_number, institution, investment_rate, routing_number, starting_balance, _type, user_id)
+VALUES 
+('445566778', 'Bank F', NULL, '333000025', 500.00, 'CREDIT', '1'),
+('998877665', 'Bank G', NULL, '333000026', 800.00, 'CREDIT', '1');
+
+INSERT INTO accounts (account_number, institution, investment_rate, routing_number, starting_balance, _type, user_id)
+VALUES 
+('554433221', 'Investment Bank A', 5.00, '444000025', 10000.00, 'INVESTMENT', '1'),
+('776655443', 'Investment Bank B', 4.50, '444000026', 8000.00, 'INVESTMENT', '1');
