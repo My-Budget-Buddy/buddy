@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "CLI tool for cloning, building, and containerizing BudgetBuddy microservices.",
   "main": "dist/index.js",
+  "type": "module",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc && chmod +x dist/index.js"
   },
   "bin": {
     "buddy": "dist/index.js"
