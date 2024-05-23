@@ -76,10 +76,10 @@ export const build = async (all: boolean): Promise<void> => {
     const files = await readdir(".");
     if (!files.includes("Dockerfile")) {
       spinner.text = dim("\tCreating Dockerfile...");
-      const Dockerfile = `FROM eclipse-temurin:17-jre-alpine
+      const Dockerfile = `FROM alpine:latest
 
-RUN apk update && apk upgrade
-      
+RUN apk update && apk upgrade && apk add openjdk17-jre
+
 WORKDIR /app
       
 COPY target/*.jar /app/app.jar
