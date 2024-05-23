@@ -25,6 +25,33 @@ VALUES ('user03@domain.com', '$2y$10$Snb12fzwuYwQY/5zxZTFDer0UK1.RyAVnzCqVVzcF8s
 INSERT INTO user_credentials (username, oauth2_idp, user_role)
 VALUES ('user04@gmail.com', 'GOOGLE', 'USER');
 
+--- USERS ---
+CREATE SEQUENCE users_id_seq;
+
+DROP TABLE IF EXISTS users;
+
+CREATE TABLE IF NOT EXISTS users
+(
+    id integer NOT NULL DEFAULT nextval('users_id_seq'::regclass),
+    email character varying(255) COLLATE pg_catalog."default",
+    first_name character varying(255) COLLATE pg_catalog."default",
+    last_name character varying(255) COLLATE pg_catalog."default",
+    password character varying(255) COLLATE pg_catalog."default",
+    CONSTRAINT users_pkey PRIMARY KEY (id)
+);
+
+INSERT INTO users (email, first_name, last_name)
+VALUES ('user01@domain.com', 'User', 'One');
+
+INSERT INTO users (email, first_name, last_name)
+VALUES ('user02@domain.com', 'User', 'Two');
+
+INSERT INTO users (email, first_name, last_name)
+VALUES ('user03@domain.com', 'User', 'Three');
+
+INSERT INTO users (email, first_name, last_name)
+VALUES ('user04@domain.com', 'User', 'Four');
+
 --- BUDGETS ---
 
 DROP TABLE IF EXISTS monthly_summary;
@@ -260,6 +287,8 @@ INSERT INTO transaction (user_id, account_id, vendor_name, transaction_date, tra
 
 --- ACCOUNTS ---
 CREATE SEQUENCE accounts_id_seq;
+
+DROP TABLE IF EXISTS accounts;
 
 CREATE TABLE IF NOT EXISTS accounts
 (
