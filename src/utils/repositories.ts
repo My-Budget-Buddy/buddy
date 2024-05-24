@@ -21,35 +21,35 @@ export interface Repository {
 export const repositories: Repository[] = [
   {
     url: "https://github.com/My-Budget-Buddy/Budget-Buddy-AccountService",
-    branch: "main",
+    branch: "feature/no-auth",
     rootDir: "",
     serviceName: "accounts",
     port: 8080,
   },
   {
     url: "https://github.com/My-Budget-Buddy/Budget-Buddy-UserService",
-    branch: "main",
+    branch: "feature/no-auth",
     rootDir: "",
     serviceName: "users",
     port: 8081,
   },
   {
     url: "https://github.com/My-Budget-Buddy/Budget-Buddy-BudgetService",
-    branch: "develop",
+    branch: "feature/no-auth",
     rootDir: "/budget-service",
     serviceName: "budgets",
     port: 8082,
   },
   {
     url: "https://github.com/My-Budget-Buddy/Budget-Buddy-TransactionService",
-    branch: "main",
+    branch: "feature/no-auth",
     rootDir: "",
     serviceName: "transactions",
     port: 8083,
   },
   {
     url: "https://github.com/My-Budget-Buddy/Budget-Buddy-TaxService",
-    branch: "main",
+    branch: "feature/no-auth",
     rootDir: "",
     serviceName: "tax",
     port: 8084,
@@ -64,7 +64,7 @@ export const repositories: Repository[] = [
   },
   {
     url: "https://github.com/My-Budget-Buddy/Budget-Buddy-DiscoveryService",
-    branch: "main",
+    branch: "feature/no-auth",
     rootDir: "",
     serviceName: "eureka",
     default: true,
@@ -72,7 +72,7 @@ export const repositories: Repository[] = [
   },
   {
     url: "https://github.com/My-Budget-Buddy/Budget-Buddy-AuthService",
-    branch: "main",
+    branch: "feature/no-auth",
     rootDir: "",
     serviceName: "auth",
     port: 8888,
