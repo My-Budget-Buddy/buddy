@@ -77,7 +77,7 @@ services:
     build: ./services/Budget-Buddy-BudgetService/budget-service
     container_name: bb-budgets
     ports:
-      - 8082:8080
+      - 8082:8082
     environment:
       - DATABASE_URL=jdbc:postgresql://db:5432/budgetbuddy
       - DATABASE_USERNAME=postgres
