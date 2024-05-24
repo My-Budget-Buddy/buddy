@@ -30,6 +30,30 @@ services:
       interval: 5s
       timeout: 5s
       retries: 10
+  auth:
+    build: ./services/Budget-Buddy-AuthService
+    container_name: bb-auth
+    ports:
+      - 8888:8888
+    environment:
+      - DATABASE_URL=jdbc:postgresql://db:5432/budgetbuddy
+      - DATABASE_USER=postgres
+      - DATABASE_PASS=password
+      - EUREKA_URL=http://eureka:8761/eureka
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "echo nothing",
+        ]
+      interval: 60s
+      timeout: 5s
+      retries: 10
+    depends_on:
+      db:
+        condition: service_healthy
+      eureka:
+        condition: service_healthy
   gateway:
     build: ./services/Budget-Buddy-GatewayService
     container_name: bb-gateway
@@ -43,6 +67,8 @@ services:
         condition: service_healthy
       eureka:
         condition: service_healthy
+      auth:
+        condition: service_healthy
   accounts:
     build: ./services/Budget-Buddy-AccountService
     container_name: bb-accounts
@@ -52,21 +78,6 @@ services:
       - DATABASE_URL=jdbc:postgresql://db:5432/budgetbuddy
       - DATABASE_USERNAME=postgres
       - DATABASE_PASSWORD=password
-      - EUREKA_URL=http://eureka:8761/eureka
-    depends_on:
-      db:
-        condition: service_healthy
-      eureka:
-        condition: service_healthy
-  auth:
-    build: ./services/Budget-Buddy-AuthService
-    container_name: bb-auth
-    ports:
-      - 8888:8888
-    environment:
-      - DATABASE_URL=jdbc:postgresql://db:5432/budgetbuddy
-      - DATABASE_USER=postgres
-      - DATABASE_PASS=password
       - EUREKA_URL=http://eureka:8761/eureka
     depends_on:
       db:
