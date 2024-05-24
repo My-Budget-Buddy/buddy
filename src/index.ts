@@ -12,7 +12,11 @@ program
     "-a, --all",
     "Clones all repositories, skips asking which ones to clone."
   )
-  .action(async (options) => await build(options.all));
+  .option(
+    "-o, --overwrite",
+    "Overwrite any existing Dockerfile from the repositories, with a MacOS/Windows/Linux compatible default."
+  )
+  .action(async (options) => await build(options.all, options.overwrite));
 
 program
   .command("clean")
