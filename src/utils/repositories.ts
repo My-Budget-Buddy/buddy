@@ -56,7 +56,7 @@ export const repositories: Repository[] = [
   },
   {
     url: "https://github.com/My-Budget-Buddy/Budget-Buddy-GatewayService",
-    branch: "main",
+    branch: "feature/no-auth",
     rootDir: "",
     serviceName: "gateway",
     default: true,
