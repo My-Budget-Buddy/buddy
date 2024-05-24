@@ -133,11 +133,6 @@ services:
         condition: service_healthy
       eureka:
         condition: service_healthy
-  frontend:
-    build: ./services/frontend
-    container_name: bb-frontend
-    ports:
-      - 5173:5173
 
 volumes:
   budgetbuddy-data:
