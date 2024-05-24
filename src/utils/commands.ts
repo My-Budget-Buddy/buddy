@@ -5,14 +5,18 @@ import prompts, { PromptObject } from "prompts";
 import child_process from "child_process";
 
 import { chdir, cwd } from "process";
-const { red, green, bold, dim } = pkg;
 import ora, { oraPromise } from "ora";
 import { repositories } from "./repositories.js";
+const { red, green, bold, dim, underline } = pkg;
 
 const rm = util.promisify(fs.rm);
 const readdir = util.promisify(fs.readdir);
 const writeFile = util.promisify(fs.writeFile);
 const exec = util.promisify(child_process.exec);
+
+const pad = (str: string, length: number) => {
+  return str + " ".repeat(length - str.length);
+};
 
 export const build = async (all: boolean): Promise<void> => {
   let selectedRepos = repositories;
@@ -38,37 +42,52 @@ export const build = async (all: boolean): Promise<void> => {
     selectedRepos = response.selectedRepos;
   }
 
+  // for some column display stuff
+  const maxStrLen = selectedRepos.reduce((max, repo) => {
+    const name = repo.url.split("/").pop();
+    if (name) {
+      return Math.max(max, name.length);
+    }
+    return max;
+  }, 0);
+
   /* ------------------------------- clone repos ------------------------------ */
   console.log();
   for (const repo of selectedRepos) {
-    const name = repo.url.split("/").pop();
+    const name = repo.url.split("/").pop()!;
 
-    await oraPromise(
-      exec(`git clone -b ${repo.branch} ${repo.url} ${"services/" + name}`),
-      {
-        text: `Cloning ${name}...`,
-        successText: green(
-          `Successfully Cloned ${name} into services/${name}/`
-        ),
-        failText: (error) =>
-          red(bold(`Failed to clone ${name}: ${error.message}`)),
-      }
-    );
+    const cmd = `git clone -b ${repo.branch} ${repo.url} ${"services/" + name}`;
+    await oraPromise(exec(cmd), {
+      text: `Repository ${pad(name, maxStrLen)}  CLONING  ${dim("> " + cmd)}`,
+      successText: `Repository ${pad(name, maxStrLen)}  ${green(
+        bold("CLONED")
+      )}`,
+      failText: (error) =>
+        `Repository ${pad(name, maxStrLen)}  ${red(bold("FAILED"))}  ${dim(
+          error.message
+        )}`,
+    });
   }
 
   /* ---------------------------- build with maven ---------------------------- */
   console.log();
   for (const repo of selectedRepos) {
-    const name = repo.url.split("/").pop();
+    const name = repo.url.split("/").pop()!;
     const oldDirectory = cwd();
 
     chdir("services/" + name + repo.rootDir);
 
     await oraPromise(exec("mvn clean package -DskipTests"), {
-      text: `Building ${name}...`,
-      successText: green(`Successfully built and packaged ${name}`),
+      text: `Service    ${pad(name, maxStrLen)}  BUILDING  ${dim(
+        "> mvn clean package -DskipTests"
+      )}`,
+      successText: `Service    ${pad(name, maxStrLen)}  ${green(
+        bold("BUILT")
+      )}`,
       failText: (error) =>
-        red(bold(`Failed to build and package ${name}: ${error.message}`)),
+        `Service    ${pad(name, maxStrLen)}  ${red(bold("FAILED"))}  ${dim(
+          error.message
+        )}`,
     });
 
     // check for a Dockerfile, if not create one
@@ -97,12 +116,12 @@ CMD ["java", "-jar", "app.jar"]`;
 
   /* ----------------------- display compose up command ----------------------- */
   console.log();
+  console.log(bold(underline(`Start your services with this command:`)));
+
   console.log(
-    bold(
-      `Start your services with this command:\n\n\tdocker compose up -d --build db ${selectedRepos
-        .map((repo) => repo.serviceName)
-        .join(" ")}`
-    )
+    `\n\tdocker compose up -d --build db ${selectedRepos
+      .map((repo) => repo.serviceName)
+      .join(" ")}`
   );
 };
 
