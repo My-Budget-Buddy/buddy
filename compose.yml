@@ -16,6 +16,11 @@ services:
       interval: 5s
       timeout: 5s
       retries: 10
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - 5672:5672
+      - 15672:15672
   eureka:
     build: ./services/Budget-Buddy-DiscoveryService
     container_name: bb-eureka
@@ -58,6 +63,10 @@ services:
         condition: service_healthy
       eureka:
         condition: service_healthy
+      users:
+        condition: service_started
+      rabbitmq:
+        condition: service_started
   auth:
     build: ./services/Budget-Buddy-AuthService
     container_name: bb-auth
@@ -88,6 +97,10 @@ services:
         condition: service_healthy
       eureka:
         condition: service_healthy
+      users:
+        condition: service_started
+      rabbitmq:
+        condition: service_started
   tax:
     build: ./services/Budget-Buddy-TaxService
     container_name: bb-tax
@@ -103,6 +116,10 @@ services:
         condition: service_healthy
       eureka:
         condition: service_healthy
+      users:
+        condition: service_started
+      rabbitmq:
+        condition: service_started
   users:
     build: ./services/Budget-Buddy-UserService
     container_name: bb-users
@@ -118,6 +135,8 @@ services:
         condition: service_healthy
       eureka:
         condition: service_healthy
+      rabbitmq:
+        condition: service_started
   transactions:
     build: ./services/Budget-Buddy-TransactionService
     container_name: bb-transactions
@@ -133,6 +152,10 @@ services:
         condition: service_healthy
       eureka:
         condition: service_healthy
+      users:
+        condition: service_started
+      rabbitmq:
+        condition: service_started
 
 volumes:
   budgetbuddy-data:

@@ -58,8 +58,8 @@ export const build = async (all: boolean): Promise<void> => {
 
     const cmd = `git clone -b ${repo.branch} ${repo.url} ${"services/" + name}`;
     await oraPromise(exec(cmd), {
-      text: `Repository ${pad(name, maxStrLen)}  CLONING  ${dim("> " + cmd)}`,
-      successText: `Repository ${pad(name, maxStrLen)}  ${green(
+      text: `Repository ${pad(name, maxStrLen)} ${pad(repo.branch, maxStrLen)}  CLONING  ${dim("> " + cmd)}`,
+      successText: `Repository ${pad(name, maxStrLen)} branch ${pad(repo.branch, maxStrLen)}  ${green(
         bold("CLONED")
       )}`,
       failText: (error) =>
