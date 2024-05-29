@@ -21,6 +21,11 @@ services:
     ports:
       - 5672:5672
       - 15672:15672
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 5s
+      timeout: 5s
+      retries: 10
   eureka:
     build: ./services/Budget-Buddy-DiscoveryService
     container_name: bb-eureka
@@ -48,6 +53,8 @@ services:
         condition: service_healthy
       eureka:
         condition: service_healthy
+      auth:
+        condition: service_healthy
   accounts:
     build: ./services/Budget-Buddy-AccountService
     container_name: bb-accounts
@@ -64,9 +71,9 @@ services:
       eureka:
         condition: service_healthy
       users:
-        condition: service_started
+        condition: service_healthy
       rabbitmq:
-        condition: service_started
+        condition: service_healthy
   auth:
     build: ./services/Budget-Buddy-AuthService
     container_name: bb-auth
@@ -77,10 +84,19 @@ services:
       - DATABASE_USER=postgres
       - DATABASE_PASS=password
       - EUREKA_URL=http://eureka:8761/eureka
+    healthcheck:
+      test: ["CMD-SHELL", "echo nothing"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
     depends_on:
       db:
         condition: service_healthy
       eureka:
+        condition: service_healthy
+      users:
+        condition: service_healthy
+      rabbitmq:
         condition: service_healthy
   budgets:
     build: ./services/Budget-Buddy-BudgetService/budget-service
@@ -98,9 +114,9 @@ services:
       eureka:
         condition: service_healthy
       users:
-        condition: service_started
+        condition: service_healthy
       rabbitmq:
-        condition: service_started
+        condition: service_healthy
   tax:
     build: ./services/Budget-Buddy-TaxService
     container_name: bb-tax
@@ -117,9 +133,9 @@ services:
       eureka:
         condition: service_healthy
       users:
-        condition: service_started
+        condition: service_healthy
       rabbitmq:
-        condition: service_started
+        condition: service_healthy
   users:
     build: ./services/Budget-Buddy-UserService
     container_name: bb-users
@@ -130,13 +146,18 @@ services:
       - DATABASE_USERNAME=postgres
       - DATABASE_PASSWORD=password
       - EUREKA_URL=http://eureka:8761/eureka
+    healthcheck:
+      test: ["CMD-SHELL", "echo nothing"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
     depends_on:
       db:
         condition: service_healthy
       eureka:
         condition: service_healthy
       rabbitmq:
-        condition: service_started
+        condition: service_healthy
   transactions:
     build: ./services/Budget-Buddy-TransactionService
     container_name: bb-transactions
@@ -153,9 +174,9 @@ services:
       eureka:
         condition: service_healthy
       users:
-        condition: service_started
+        condition: service_healthy
       rabbitmq:
-        condition: service_started
+        condition: service_healthy
 
 volumes:
   budgetbuddy-data:

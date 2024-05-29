@@ -72,7 +72,7 @@ export const repositories: Repository[] = [
   },
   {
     url: "https://github.com/My-Budget-Buddy/Budget-Buddy-AuthService",
-    branch: "main",
+    branch: "feature/rabbitmq",
     rootDir: "",
     serviceName: "auth",
     port: 8888,
