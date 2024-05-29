@@ -41,11 +41,7 @@ services:
       - DATABASE_PASS=password
       - EUREKA_URL=http://eureka:8761/eureka
     healthcheck:
-      test:
-        [
-          "CMD-SHELL",
-          "echo nothing",
-        ]
+      test: ["CMD-SHELL", "echo nothing"]
       interval: 60s
       timeout: 5s
       retries: 10
@@ -144,6 +140,16 @@ services:
         condition: service_healthy
       eureka:
         condition: service_healthy
+  credit-score:
+    build: ./services/Budget-Buddy-CreditScoreService
+    container_name: bb-creditscore
+    ports:
+      - 8085:8085
+    environment:
+      - DATABASE_URL=jdbc:postgresql://db:5432/budgetbuddy
+      - DATABASE_USER=postgres
+      - DATABASE_PASS=password
+      - EUREKA_URL=http://eureka:8761/eureka
 
 volumes:
   budgetbuddy-data:

@@ -55,6 +55,13 @@ export const repositories: Repository[] = [
     port: 8084,
   },
   {
+    url: "https://github.com/My-Budget-Buddy/Budget-Buddy-CreditScoreService",
+    branch: "main",
+    rootDir: "",
+    serviceName: "credit-score",
+    port: 8085,
+  },
+  {
     url: "https://github.com/My-Budget-Buddy/Budget-Buddy-GatewayService",
     branch: "main",
     rootDir: "",
@@ -75,13 +82,7 @@ export const repositories: Repository[] = [
     branch: "main",
     rootDir: "",
     serviceName: "auth",
+    default: true,
     port: 8888,
   },
-  // {
-  //   url: "https://github.com/My-Budget-Buddy/Budget-Buddy-Frontend",
-  //   branch: "dev",
-  //   rootDir: "",
-  //   serviceName: "frontend",
-  //   port: 5173,
-  // },
 ];
