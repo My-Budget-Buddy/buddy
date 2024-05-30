@@ -1030,21 +1030,4 @@ VALUES
 
 INSERT INTO accounts (account_number, institution, investment_rate, routing_number, starting_balance, _type, user_id)
 VALUES 
-('123456788', 'Bank of Skillstorm - Checking', NULL, '111000025', 1500.00, 'CHECKING', '2'),
-('987654322', 'Unity Financial - Checking', NULL, '111000026', 2000.00, 'CHECKING', '2'),
 ('112233446', 'Heritage Bank', NULL, '111000027', 1200.00, 'CHECKING', '2');
-
-INSERT INTO accounts (account_number, institution, investment_rate, routing_number, starting_balance, _type, user_id)
-VALUES 
-('223344557', 'Bank of Skillstorm - Savings', NULL, '222000025', 3000.00, 'SAVINGS', '2'),
-('667788992', 'Unity Financial - Savings', NULL, '222000026', 2500.00, 'SAVINGS', '2');
-
-INSERT INTO accounts (account_number, institution, investment_rate, routing_number, starting_balance, _type, user_id)
-VALUES 
-('445566779', 'Ascend Financial Group', NULL, '333000025', 500.00, 'CREDIT', '2'),
-('998877668', 'Keystone Bank', NULL, '333000026', 800.00, 'CREDIT', '2');
-
-INSERT INTO accounts (account_number, institution, investment_rate, routing_number, starting_balance, _type, user_id)
-VALUES 
-('554433228', 'Horizon Wealth Management', 5.00, '444000025', 10000.00, 'INVESTMENT', '2'),
-('776655442', 'Prestige Investment Group', 4.50, '444000026', 8000.00, 'INVESTMENT', '2');
