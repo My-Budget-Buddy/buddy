@@ -14,10 +14,10 @@ CREATE TABLE user_credentials (
 );
 
 INSERT INTO user_credentials (username, user_password, user_role)
-VALUES ('user01@domain.com', '$2y$10$R.AVbuzy7f7Vijnj94DF1.7aI8C7V4Zwbf2FWAWk2dCRC3n1iOkbG', 'USER');
+VALUES ('joseph.sam@gmail.com', '$2y$10$R.AVbuzy7f7Vijnj94DF1.7aI8C7V4Zwbf2FWAWk2dCRC3n1iOkbG', 'USER');
 
 INSERT INTO user_credentials (username, user_password, user_role)
-VALUES ('user02@domain.com', '$2y$10$SfJCRbSkbM.ObOJHvVCRNuxdrY13loabTM8ROaGW1kBCWJHhI/iZ6', 'USER');
+VALUES ('david.melanson@gmail.com', '$2y$10$SfJCRbSkbM.ObOJHvVCRNuxdrY13loabTM8ROaGW1kBCWJHhI/iZ6', 'USER');
 
 INSERT INTO user_credentials (username, user_password, user_role)
 VALUES ('user03@domain.com', '$2y$10$Snb12fzwuYwQY/5zxZTFDer0UK1.RyAVnzCqVVzcF8sF6OF6pdCAm', 'USER');
@@ -25,7 +25,10 @@ VALUES ('user03@domain.com', '$2y$10$Snb12fzwuYwQY/5zxZTFDer0UK1.RyAVnzCqVVzcF8s
 INSERT INTO user_credentials (username, oauth2_idp, user_role)
 VALUES ('user04@gmail.com', 'GOOGLE', 'USER');
 
+
+
 --- USERS ---
+
 CREATE SEQUENCE users_id_seq;
 
 DROP TABLE IF EXISTS users;
@@ -36,21 +39,22 @@ CREATE TABLE IF NOT EXISTS users
     email character varying(255) COLLATE pg_catalog."default",
     first_name character varying(255) COLLATE pg_catalog."default",
     last_name character varying(255) COLLATE pg_catalog."default",
-    password character varying(255) COLLATE pg_catalog."default",
     CONSTRAINT users_pkey PRIMARY KEY (id)
 );
 
 INSERT INTO users (email, first_name, last_name)
-VALUES ('user01@domain.com', 'User', 'One');
+VALUES ('joseph.sam@gmail.com', 'Joseph', 'Sam');
 
 INSERT INTO users (email, first_name, last_name)
-VALUES ('user02@domain.com', 'User', 'Two');
+VALUES ('david.melanson@gmail.com', 'David', 'Melanson');
 
 INSERT INTO users (email, first_name, last_name)
 VALUES ('user03@domain.com', 'User', 'Three');
 
 INSERT INTO users (email, first_name, last_name)
 VALUES ('user04@domain.com', 'User', 'Four');
+
+
 
 --- BUDGETS ---
 
@@ -109,6 +113,8 @@ INSERT INTO monthly_summary (user_id, month_year, projected_income, total_budget
 (1, '2024-05-01', 7777.00, 1111.00),
 (2, '2024-05-01', 9999.00, 3333.00),
 (3, '2024-05-01', 9876.00, 999.00);
+
+
 
 --- TAX ---
 
@@ -934,6 +940,8 @@ INSERT INTO deduction (name, agi_limit, itemized) VALUES ('Casualty Losses', 0.1
 INSERT INTO deduction (name, agi_limit, itemized) VALUES ('Miscellaneous Deductions', 1.000, true);
 COMMIT;
 
+
+
 --- TRANSACTIONS ---
 
 DROP TABLE IF EXISTS transaction;
@@ -960,9 +968,27 @@ INSERT INTO transaction (user_id, account_id, vendor_name, transaction_date, tra
 (1, 108, 'Uber', '2024-01-22', 25.00, 'Ride to airport', 'TRANSPORTATION'),
 (4, 109, 'Spotify', '2024-01-23', 9.99, 'Monthly subscription', 'ENTERTAINMENT'),
 (2, 110, 'Best Buy', '2024-01-24', 499.99, 'Laptop purchase', 'SHOPPING'),
-(2, 102, 'Skillstorm', '2024-01-10', 2010.45, 'Paycheck', 'INCOME');
+(2, 102, 'Skillstorm', '2024-01-10', 2010.45, 'Paycheck', 'INCOME'),
+(1, 101, 'Whole Foods', '2024-05-29', 75.34, 'Organic groceries', 'GROCERIES'),
+(1, 103, 'Home Depot', '2024-05-28', 120.50, 'Home improvement tools', 'LIVING_EXPENSES'),
+(1, 108, 'Lyft', '2024-05-27', 30.00, 'Ride to downtown', 'TRANSPORTATION'),
+(1, 101, 'Target', '2024-05-26', 150.00, 'Clothing and household items', 'SHOPPING'),
+(1, 103, 'Walgreens', '2024-05-25', 25.99, 'Pharmacy and essentials', 'HEALTHCARE'),
+(1, 108, 'Airbnb', '2024-02-25', 250.00, 'Weekend getaway', 'ENTERTAINMENT'),
+(2, 102, 'Chipotle', '2024-03-01', 12.75, 'Lunch', 'DINING'),
+(3, 104, 'Microsoft Store', '2024-03-05', 150.00, 'Office software', 'SHOPPING'),
+(4, 106, 'BP', '2024-03-10', 48.50, 'Gas for car', 'TRANSPORTATION'),
+(3, 107, 'Costco', '2024-03-15', 220.00, 'Bulk groceries', 'GROCERIES'),
+(2, 105, 'Hulu', '2024-03-20', 11.99, 'Monthly subscription', 'ENTERTAINMENT'),
+(4, 109, 'Pandora', '2024-03-25', 4.99, 'Monthly subscription', 'ENTERTAINMENT'),
+(1, 101, 'Publix', '2024-05-30', 80.00, 'Groceries and snacks', 'GROCERIES'),
+(1, 103, 'REI', '2024-05-24', 200.00, 'Outdoor gear', 'SHOPPING'),
+(1, 108, 'DHL', '2024-05-30', 50.00, 'Package delivery', 'MISC');
+
+
 
 --- ACCOUNTS ---
+
 CREATE SEQUENCE accounts_id_seq;
 
 DROP TABLE IF EXISTS accounts;
@@ -983,21 +1009,42 @@ CREATE TABLE IF NOT EXISTS accounts
 
 INSERT INTO accounts (account_number, institution, investment_rate, routing_number, starting_balance, _type, user_id)
 VALUES 
-('123456789', 'Bank A', NULL, '111000025', 1500.00, 'CHECKING', '1'),
-('987654321', 'Bank B', NULL, '111000026', 2000.00, 'CHECKING', '1'),
-('112233445', 'Bank C', NULL, '111000027', 1200.00, 'CHECKING', '1');
+('123456789', 'Bank of Skillstorm - Checking', NULL, '111000025', 1500.00, 'CHECKING', '1'),
+('987654321', 'Unity Financial - Checking', NULL, '111000026', 2000.00, 'CHECKING', '1'),
+('112233445', 'Heritage Bank', NULL, '111000027', 1200.00, 'CHECKING', '1');
 
 INSERT INTO accounts (account_number, institution, investment_rate, routing_number, starting_balance, _type, user_id)
 VALUES 
-('223344556', 'Bank D', NULL, '222000025', 3000.00, 'SAVINGS', '1'),
-('667788990', 'Bank E', NULL, '222000026', 2500.00, 'SAVINGS', '1');
+('223344556', 'Bank of Skillstorm - Savings', NULL, '222000025', 3000.00, 'SAVINGS', '1'),
+('667788990', 'Unity Financial - Savings', NULL, '222000026', 2500.00, 'SAVINGS', '1');
 
 INSERT INTO accounts (account_number, institution, investment_rate, routing_number, starting_balance, _type, user_id)
 VALUES 
-('445566778', 'Bank F', NULL, '333000025', 500.00, 'CREDIT', '1'),
-('998877665', 'Bank G', NULL, '333000026', 800.00, 'CREDIT', '1');
+('445566778', 'Ascend Financial Group', NULL, '333000025', 500.00, 'CREDIT', '1'),
+('998877665', 'Keystone Bank', NULL, '333000026', 800.00, 'CREDIT', '1');
 
 INSERT INTO accounts (account_number, institution, investment_rate, routing_number, starting_balance, _type, user_id)
 VALUES 
-('554433221', 'Investment Bank A', 5.00, '444000025', 10000.00, 'INVESTMENT', '1'),
-('776655443', 'Investment Bank B', 4.50, '444000026', 8000.00, 'INVESTMENT', '1');
+('554433221', 'Horizon Wealth Management', 5.00, '444000025', 10000.00, 'INVESTMENT', '1'),
+('776655443', 'Prestige Investment Group', 4.50, '444000026', 8000.00, 'INVESTMENT', '1');
+
+INSERT INTO accounts (account_number, institution, investment_rate, routing_number, starting_balance, _type, user_id)
+VALUES 
+('123456788', 'Bank of Skillstorm - Checking', NULL, '111000025', 1500.00, 'CHECKING', '2'),
+('987654322', 'Unity Financial - Checking', NULL, '111000026', 2000.00, 'CHECKING', '2'),
+('112233446', 'Heritage Bank', NULL, '111000027', 1200.00, 'CHECKING', '2');
+
+INSERT INTO accounts (account_number, institution, investment_rate, routing_number, starting_balance, _type, user_id)
+VALUES 
+('223344557', 'Bank of Skillstorm - Savings', NULL, '222000025', 3000.00, 'SAVINGS', '2'),
+('667788992', 'Unity Financial - Savings', NULL, '222000026', 2500.00, 'SAVINGS', '2');
+
+INSERT INTO accounts (account_number, institution, investment_rate, routing_number, starting_balance, _type, user_id)
+VALUES 
+('445566779', 'Ascend Financial Group', NULL, '333000025', 500.00, 'CREDIT', '2'),
+('998877668', 'Keystone Bank', NULL, '333000026', 800.00, 'CREDIT', '2');
+
+INSERT INTO accounts (account_number, institution, investment_rate, routing_number, starting_balance, _type, user_id)
+VALUES 
+('554433228', 'Horizon Wealth Management', 5.00, '444000025', 10000.00, 'INVESTMENT', '2'),
+('776655442', 'Prestige Investment Group', 4.50, '444000026', 8000.00, 'INVESTMENT', '2');
