@@ -991,6 +991,8 @@ INSERT INTO transaction (user_id, account_id, vendor_name, transaction_date, tra
 
 --- ACCOUNTS ---
 
+DROP SEQUENCE IF EXISTS accounts_id_seq CASCADE;
+
 CREATE SEQUENCE accounts_id_seq;
 
 DROP TABLE IF EXISTS accounts;
