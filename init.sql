@@ -985,7 +985,7 @@ INSERT INTO transaction (user_id, account_id, vendor_name, transaction_date, tra
 (1, 2, 'Pandora', '2024-03-25', 4.99, 'Monthly subscription', 'ENTERTAINMENT'),
 (1, 1, 'Publix', '2024-05-30', 80.00, 'Groceries and snacks', 'GROCERIES'),
 (1, 2, 'REI', '2024-05-24', 200.00, 'Outdoor gear', 'SHOPPING'),
-(1, 2, 'DHL', '2024-05-30', 50.00, 'Package delivery', 'MISC')
+(1, 2, 'DHL', '2024-05-30', 50.00, 'Package delivery', 'MISC'),
 (1, 1, 'Costco', '2024-03-15', 100.00, 'Bulk groceries', 'GROCERIES'),
 (1, 1, 'Costco', '2024-03-15', 50.00, 'Bulk groceries', 'GROCERIES'),
 (1, 2, 'Costco', '2024-03-15', 425.00, 'Bulk groceries', 'GROCERIES'),
