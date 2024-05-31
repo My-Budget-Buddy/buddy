@@ -29,6 +29,8 @@ VALUES ('user04@gmail.com', 'GOOGLE', 'USER');
 
 --- USERS ---
 
+DROP SEQUENCE IF EXISTS users_id_seq;
+
 CREATE SEQUENCE users_id_seq;
 
 DROP TABLE IF EXISTS users;
