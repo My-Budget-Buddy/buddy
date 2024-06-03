@@ -44,8 +44,10 @@ Usage: buddy build [options]
 Clone, build, and start services
 
 Options:
-  -a, --all   Clones all repositories, skips asking which ones to clone.
-  -h, --help  display help for command
+  -a, --all        Clones all repositories, skips asking which ones to clone.
+  -o, --overwrite  Overwrite any existing Dockerfile from the repositories, with a MacOS/Windows/Linux compatible
+                   default. (Not necessary, but makes building faster)
+  -h, --help       display help for command
 ```
 
 #### 2. buddy clean
