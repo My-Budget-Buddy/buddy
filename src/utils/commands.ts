@@ -18,7 +18,10 @@ const pad = (str: string, length: number) => {
   return str + " ".repeat(length - str.length);
 };
 
-export const build = async (all: boolean): Promise<void> => {
+export const build = async (
+  all: boolean,
+  overwrite: boolean
+): Promise<void> => {
   let selectedRepos = repositories;
   if (!all) {
     const questions = [
@@ -93,7 +96,7 @@ export const build = async (all: boolean): Promise<void> => {
     // check for a Dockerfile, if not create one
     const spinner = ora(dim("\tChecking for Dockerfile...")).start();
     const files = await readdir(".");
-    if (!files.includes("Dockerfile")) {
+    if (!files.includes("Dockerfile") || overwrite) {
       spinner.text = dim("\tCreating Dockerfile...");
       const Dockerfile = `FROM alpine:latest
 
