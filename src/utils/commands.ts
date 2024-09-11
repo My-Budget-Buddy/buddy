@@ -20,7 +20,8 @@ const pad = (str: string, length: number) => {
 
 export const build = async (
   all: boolean,
-  overwrite: boolean
+  overwrite: boolean,
+  build: boolean
 ): Promise<void> => {
   let selectedRepos = repositories;
   if (!all) {
@@ -74,47 +75,51 @@ export const build = async (
 
   /* ---------------------------- build with maven ---------------------------- */
   console.log();
-  for (const repo of selectedRepos) {
-    const name = repo.url.split("/").pop()!;
-    const oldDirectory = cwd();
+  if (!build) {
+    console.log(bold(underline("Skipping build step")));
+  } else {
+    for (const repo of selectedRepos) {
+      const name = repo.url.split("/").pop()!;
+      const oldDirectory = cwd();
 
-    chdir("services/" + name + repo.rootDir);
+      chdir("services/" + name + repo.rootDir);
 
-    await oraPromise(exec("mvn clean package -DskipTests"), {
-      text: `Service    ${pad(name, maxStrLen)}  BUILDING  ${dim(
-        "> mvn clean package -DskipTests"
-      )}`,
-      successText: `Service    ${pad(name, maxStrLen)}  ${green(
-        bold("BUILT")
-      )}`,
-      failText: (error) =>
-        `Service    ${pad(name, maxStrLen)}  ${red(bold("FAILED"))}  ${dim(
-          error.message
+      await oraPromise(exec("mvn clean package -DskipTests"), {
+        text: `Service    ${pad(name, maxStrLen)}  BUILDING  ${dim(
+          "> mvn clean package -DskipTests"
         )}`,
-    });
+        successText: `Service    ${pad(name, maxStrLen)}  ${green(
+          bold("BUILT")
+        )}`,
+        failText: (error) =>
+          `Service    ${pad(name, maxStrLen)}  ${red(bold("FAILED"))}  ${dim(
+            error.message
+          )}`,
+      });
 
-    // check for a Dockerfile, if not create one
-    const spinner = ora(dim("\tChecking for Dockerfile...")).start();
-    const files = await readdir(".");
-    if (!files.includes("Dockerfile") || overwrite) {
-      spinner.text = dim("\tCreating Dockerfile...");
-      const Dockerfile = `FROM alpine:latest
+      // check for a Dockerfile, if not create one
+      const spinner = ora(dim("\tChecking for Dockerfile...")).start();
+      const files = await readdir(".");
+      if (!files.includes("Dockerfile") || overwrite) {
+        spinner.text = dim("\tCreating Dockerfile...");
+        const Dockerfile = `FROM alpine:latest
+  
+  RUN apk update && apk upgrade && apk add openjdk17-jre
+  
+  WORKDIR /app
+        
+  COPY target/*.jar /app/app.jar
+        
+  EXPOSE ${repo.port}
+        
+  CMD ["java", "-jar", "app.jar"]`;
 
-RUN apk update && apk upgrade && apk add openjdk17-jre
+        await writeFile("Dockerfile", Dockerfile);
+        spinner.succeed(dim(`\tCreated Dockerfile for ${name}`));
+      } else spinner.stop();
 
-WORKDIR /app
-      
-COPY target/*.jar /app/app.jar
-      
-EXPOSE ${repo.port}
-      
-CMD ["java", "-jar", "app.jar"]`;
-
-      await writeFile("Dockerfile", Dockerfile);
-      spinner.succeed(dim(`\tCreated Dockerfile for ${name}`));
-    } else spinner.stop();
-
-    chdir(oldDirectory);
+      chdir(oldDirectory);
+    }
   }
 
   /* ----------------------- display compose up command ----------------------- */
