@@ -13,8 +13,8 @@ program
     "Clones all repositories, skips asking which ones to clone."
   )
   .option(
-    "-o, --overwrite",
-    "Overwrite any existing Dockerfile from the repositories, with a MacOS/Windows/Linux compatible default."
+    "--no-overwrite",
+    "Default is to overwrite any existing Dockerfile from the repositories, with a MacOS/Windows/Linux compatible default. Enabling this flag keeps the original Dockerfile."
   )
   .action(async (options) => {
     await build(options.all, options.overwrite);
