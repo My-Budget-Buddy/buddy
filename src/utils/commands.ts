@@ -56,20 +56,32 @@ export const build = async (
 
   /* ------------------------------- clone repos ------------------------------ */
   console.log();
-  for (const repo of selectedRepos) {
-    const name = repo.url.split("/").pop()!;
+  try {
+    for (const repo of selectedRepos) {
+      const name = repo.url.split("/").pop()!;
 
-    const cmd = `git clone -b ${repo.branch} ${repo.url} ${"services/" + name}`;
-    await oraPromise(exec(cmd), {
-      text: `Repository ${pad(name, maxStrLen)}  CLONING  ${dim("> " + cmd)}`,
-      successText: `Repository ${pad(name, maxStrLen)}  ${green(
-        bold("CLONED")
-      )}`,
-      failText: (error) =>
-        `Repository ${pad(name, maxStrLen)}  ${red(bold("FAILED"))}  ${dim(
-          error.message
+      const cmd = `git clone -b ${repo.branch} ${repo.url} ${
+        "services/" + name
+      }`;
+      await oraPromise(exec(cmd), {
+        text: `Repository ${pad(name, maxStrLen)}  CLONING  ${dim("> " + cmd)}`,
+        successText: `Repository ${pad(name, maxStrLen)}  ${green(
+          bold("CLONED")
         )}`,
-    });
+        failText: (error) =>
+          `Repository ${pad(name, maxStrLen)}  ${red(bold("FAILED"))}  ${dim(
+            error.message
+          )}`,
+      });
+    }
+  } catch (e) {
+    console.error(
+      red(bold("Failed to clone repository. Does it already exist?")),
+      dim("Run the"),
+      dim(underline("buddy clean")),
+      dim(" command to remove existing directories.")
+    );
+    return;
   }
 
   /* ---------------------------- build with maven ---------------------------- */
