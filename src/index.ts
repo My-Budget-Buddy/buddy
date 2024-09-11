@@ -16,9 +16,8 @@ program
     "-o, --overwrite",
     "Overwrite any existing Dockerfile from the repositories, with a MacOS/Windows/Linux compatible default."
   )
-  .option("--no-build", "Skip the maven build step for each service.")
   .action(async (options) => {
-    await build(options.all, options.overwrite, options.build);
+    await build(options.all, options.overwrite);
   });
 
 program
