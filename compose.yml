@@ -84,7 +84,7 @@ services:
       eureka:
         condition: service_healthy
   budgets:
-    build: ./services/Budget-Buddy-BudgetService/budget-service
+    build: ./services/Budget-Buddy-BudgetService
     container_name: bb-budgets
     ports:
       - 8082:8082
