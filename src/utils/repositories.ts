@@ -36,7 +36,7 @@ export const repositories: Repository[] = [
   {
     url: "https://github.com/My-Budget-Buddy/Budget-Buddy-BudgetService",
     branch: "testing-cohort",
-    rootDir: "/budget-service",
+    rootDir: "",
     serviceName: "budgets",
     port: 8082,
   },
