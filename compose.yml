@@ -74,8 +74,8 @@ services:
       - 8080:8080
     environment:
       - DATABASE_URL=jdbc:postgresql://db:5432/budgetbuddy
-      - DATABASE_USERNAME=postgres
-      - DATABASE_PASSWORD=password
+      - DATABASE_USER=postgres
+      - DATABASE_PASS=password
       - EUREKA_URL=http://eureka:8761/eureka
       - AWS_HOSTNAME=host.docker.internal # account-service for AWS
     depends_on:
@@ -90,8 +90,8 @@ services:
       - 8082:8082
     environment:
       - DATABASE_URL=jdbc:postgresql://db:5432/budgetbuddy
-      - DATABASE_USERNAME=postgres
-      - DATABASE_PASSWORD=password
+      - DATABASE_USER=postgres
+      - DATABASE_PASS=password
       - EUREKA_URL=http://eureka:8761/eureka
       - AWS_HOSTNAME=host.docker.internal # budgets-service for AWS
     depends_on:
@@ -122,8 +122,8 @@ services:
       - 8081:8081
     environment:
       - DATABASE_URL=jdbc:postgresql://db:5432/budgetbuddy
-      - DATABASE_USERNAME=postgres
-      - DATABASE_PASSWORD=password
+      - DATABASE_USER=postgres
+      - DATABASE_PASS=password
       - EUREKA_URL=http://eureka:8761/eureka
       - AWS_HOSTNAME=host.docker.internal # users-service for AWS
     depends_on:
